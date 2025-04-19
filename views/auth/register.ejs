@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Register</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body {
+      background-color: #1f2937; /* Dark background */
+      color: white;
+    }
+
+    .container {
+      max-width: 600px;
+    }
+
+    .card {
+      background-color: #2d3748;
+      border-radius: 15px;
+      padding: 2rem;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .card-header {
+      text-align: center;
+      font-size: 2.5rem;
+      font-weight: 700;
+      color: #3b82f6; /* Primary blue color */
+    }
+
+    .btn-primary {
+      background-color: #3b82f6;
+      border-color: #3b82f6;
+    }
+
+    .btn-primary:hover {
+      background-color: #2563eb;
+      border-color: #2563eb;
+    }
+
+    .form-label {
+      font-size: 1rem;
+      font-weight: 500;
+    }
+
+    .form-control {
+      background-color: #4a5568;
+      color: white;
+      border: none;
+      border-radius: 0.5rem;
+      padding: 1rem;
+    }
+
+    .form-control:focus {
+      border-color: #3b82f6;
+      box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
+    }
+
+    .file-input {
+      display: none; /* Hide the default file input */
+    }
+
+    .avatar-container {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 1rem;
+    }
+
+    .avatar {
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      background-color: #4a5568;
+      background-size: cover;
+      background-position: center;
+      cursor: pointer;
+      border: 4px solid #3b82f6;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: #fff;
+      font-size: 1.5rem;
+    }
+
+    .avatar:hover {
+      background-color: #2563eb;
+    }
+
+    .form-footer {
+      text-align: center;
+      margin-top: 1rem;
+      color: #cbd5e0;
+    }
+
+    .form-footer a {
+      color: #3b82f6;
+    }
+
+    .form-footer a:hover {
+      text-decoration: underline;
+    }
+
+    /* Animation for fade-in effect */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .animate-fadeIn {
+      animation: fadeIn 0.6s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="container d-flex align-items-center justify-content-center min-vh-100">
+    <div class="card animate-fadeIn">
+      <div class="card-header">
+        Create Account
+      </div>
+
+      <% if (error) { %>
+        <div class="alert alert-danger">
+          <%= error %>
+        </div>
+      <% } %>
+
+      <form action="/register" method="POST" enctype="multipart/form-data">
+        
+        <!-- Profile Picture Avatar -->
+        <div class="form-group avatar-container">
+          <label for="profilePic" class="avatar" id="avatarLabel">
+            <span>+</span>
+            <input type="file" id="profilePic" name="profilePic" accept="image/*" class="file-input" onchange="previewProfilePic(event)" />
+          </label>
+        </div>
+
+        <div class="form-group">
+          <label for="username" class="form-label">Username</label>
+          <input type="text" id="username" name="username" required class="form-control" placeholder="Enter your username" value="<%= typeof username !== 'undefined' ? username : '' %>">
+        </div>
+
+        <div class="form-group">
+          <label for="email" class="form-label">Email</label>
+          <input type="email" id="email" name="email" required class="form-control" placeholder="Enter your email" value="<%= typeof email !== 'undefined' ? email : '' %>">
+        </div>
+
+        <div class="form-group">
+          <label for="password" class="form-label">Password</label>
+          <input type="password" id="password" name="password" required class="form-control" placeholder="Enter your password">
+        </div>
+
+        <button type="submit" class="btn btn-primary btn-block">Register</button>
+      </form>
+
+      <div class="form-footer">
+        <p>Already have an account? <a href="/login">Login here</a></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+  <script>
+    // Function to preview the selected profile picture
+    function previewProfilePic(event) {
+      const file = event.target.files[0]; // Get the selected file
+      const reader = new FileReader(); // Create a FileReader to read the file
+
+      reader.onload = function(e) {
+        // Set the background image of the avatar container
+        document.querySelector('#avatarLabel').style.backgroundImage = `url(${e.target.result})`;
+        document.querySelector('#avatarLabel').querySelector('span').style.display = 'none'; // Hide the "+" symbol once image is uploaded
+      };
+
+      if (file) {
+        reader.readAsDataURL(file); // Read the file as a Data URL
+      }
+    }
+  </script>
+
+</body>
+</html>

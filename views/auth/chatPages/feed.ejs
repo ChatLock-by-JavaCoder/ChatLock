@@ -1,0 +1,329 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Chatlock Social Website</title>
+
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"/>
+  <!-- Bootstrap CSS -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" />
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+ <link rel="stylesheet" href="/style.css">
+</head>
+<body class="bg-gray-100">
+
+  <!-- Navbar -->
+  <nav class="bg-white py-2 shadow-sm">
+    <div class="container d-flex justify-content-between align-items-center">
+      <div class="d-flex align-items-center">
+        <button class="btn d-md-none mr-2" id="menuToggle">
+          <i class="fas fa-bars fa-lg"></i>
+        </button>
+        <h2 class="font-weight-bold mb-0">Chatlock</h2>
+      </div>
+      <div class="input-group d-none d-md-flex w-50">
+        <div class="input-group-prepend">
+          <span class="input-group-text"><i class="fas fa-search"></i></span>
+        </div>
+        <input type="text" class="form-control" placeholder="Search here" />
+      </div>
+      <div class="d-flex align-items-center">
+        <button class="btn btn-dark mr-2" id="toggleDarkMode">
+          <i class="fas fa-moon"></i>
+        </button>
+        <button class="btn btn-primary mr-2 d-none d-md-inline">Create</button>
+        <img src="<%= user.profilePic %>" alt="Profile" class="rounded-circle" width="40" height="40" />
+      </div>
+    </div>
+  </nav>
+
+  <!-- Mobile Sidebar -->
+  <div id="mobileSidebar" class="position-fixed bg-white h-100 shadow-sm">
+    <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
+      <h5 class="mb-0">Menu</h5>
+      <button class="btn btn-light" id="closeSidebar"><i class="fas fa-times"></i></button>
+    </div>
+    <div class="p-3">
+      <div class="mb-3 d-flex align-items-center">
+        <img src="<%= user.profilePic %>" class="rounded-circle mr-2" width="40" height="40" />
+        <div>
+          <h6 class="mb-0"><%= user.username %></h6>
+          <small class="text-muted">@<%= user.username %></small>
+        </div>
+      </div>
+      <a href="#" class="d-block mb-2"><i class="fas fa-house mr-2"></i> Home</a>
+      <a href="#" class="d-block mb-2"><i class="fab fa-wpexplorer mr-2"></i> Explore</a>
+      <a href="#" class="d-block mb-2"><i class="fas fa-bell mr-2"></i> Notifications</a>
+      <a href="#" class="d-block mb-2"><i class="fas fa-comment-dots mr-2"></i> Messages</a>
+      <a href="#" class="d-block mb-2"><i class="far fa-bookmark mr-2"></i> Bookmarks</a>
+      <a href="#" class="d-block mb-2"><i class="fa-regular fa-chart-bar mr-2"></i> Analytics</a>
+      <a href="#" class="d-block mb-2"><i class="fab fa-themeco mr-2"></i> Theme</a>
+      <a href="#" class="d-block"><i class="fa-solid fa-gear mr-2"></i> Settings</a>
+      <a href="/logout" class="d-block"><i class="fa-solid fa-gear mr-2"></i>Logout</a>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <main class="container-fluid mt-4">
+    <div class="row">
+
+      <!-- Left Sidebar (Desktop only) -->
+      <div class="col-md-3 d-none d-md-block mb-3">
+        <div class="mb-4 d-flex align-items-center">
+            <div class="profile-img-circle mr-2">
+              <img src="<%= user.profilePic %>" alt="User Image">
+            </div>
+            <div>
+              <h5 class="mb-0"><%= user.username %></h5>
+              <small class="text-muted"><%= user.username %></small>
+            </div>
+          </div>
+          
+        <div class="list-group">
+          <a href="#" class="list-group-item list-group-item-action active"><i class="fa-solid fa-house mr-2"></i>Home</a>
+          <a href="#" class="list-group-item list-group-item-action"><i class="fab fa-wpexplorer mr-2"></i>Explore</a>
+          <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-bell mr-2"></i>Notifications</span>
+            <span class="badge badge-danger badge-pill">9+</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action d-flex justify-content-between align-items-center">
+            <span><i class="fas fa-comment-dots mr-2"></i>Messages</span>
+            <span class="badge badge-primary badge-pill">6</span>
+          </a>
+          <a href="#" class="list-group-item list-group-item-action"><i class="far fa-bookmark mr-2"></i>Bookmarks</a>
+          <a href="#" class="list-group-item list-group-item-action"><i class="fa-regular fa-chart-bar mr-2"></i>Analytics</a>
+          <a href="#" class="list-group-item list-group-item-action"><i class="fab fa-themeco mr-2"></i>Theme</a>
+          <a href="#" class="list-group-item list-group-item-action"><i class="fa-solid fa-gear mr-2"></i>Settings</a>
+        </div>
+      </div>
+
+      <!-- Middle Content -->
+      <div class="col-12 col-md-6 mb-3">
+        <div class="bg-white rounded shadow-sm p-4 mb-4">
+          <!-- Post Form Header -->
+          <form class="w-100" action="/message/post" method="post" >
+            <div class="d-flex align-items-center mb-3">
+              <img src="<%= user.profilePic || '/images/default-avatar.png' %>" class="rounded-circle" width="40" height="40" />
+              <div class="ml-3">
+                <h6 class="mb-0"><%= user.username %></h6>
+                <small class="text-muted">@<%= user.username %></small>
+              </div>
+            </div>
+
+
+            <!-- <div class="d-flex mb-3">
+              <button type="button" class="btn btn-outline-primary btn-sm w-100" id="image-btn">
+                <i class="fa fa-image"></i> Image
+              </button>
+              <button type="button" class="btn btn-outline-primary btn-sm w-100 mx-2" id="video-btn">
+                <i class="fa fa-video"></i> Video
+              </button>
+              <button type="button" class="btn btn-outline-primary btn-sm w-100" id="reel-btn">
+                <i class="fa fa-film"></i> Reel
+              </button>
+            </div> -->
+
+               <!-- Post Message -->
+               <div class="form-group">
+                <textarea class="form-control" name="message" rows="3" placeholder="What are you thinking, <%= user.username %>?" required></textarea>
+              </div>
+          
+              <!-- Upload Fields -->
+              <!-- <div id="image-upload-container" class="form-group" style="display: none;">
+                <label for="image-upload">Upload an Image:</label>
+                <input type="file" class="form-control-file" id="image-upload" name="image" accept="image/*">
+              </div>
+
+              <div id="video-upload-container" class="form-group" style="display: none;">
+                <label for="video-upload">Upload a Video:</label>
+                <input type="file" class="form-control-file" id="video-upload" name="video" accept="video/*">
+              </div>
+          
+              <div id="reel-upload-container" class="form-group" style="display: none;">
+                <label for="reel-upload">Upload a Reel:</label>
+                <input type="file" class="form-control-file" id="reel-upload" name="reel" accept="video/*">
+              </div> -->
+
+                 <div class="d-flex justify-content-end">
+              <button type="submit" class="btn btn-primary btn-sm">Post</button>
+            </div>
+          </form>
+        </div>
+          
+        <!-- Create Post -->
+        <div class="container">
+          <% messages.forEach(msg => { %>
+            <div class="card mb-4 shadow-sm">
+              <div class="card-body">
+                <!-- Header -->
+                <div class="d-flex justify-content-between align-items-center">
+                  <div class="d-flex align-items-center">
+                    <img src="<%= msg.user.profilePic || '/images/default-avatar.png' %>" class="rounded-circle mr-2" width="40" height="40" />
+                    <div>
+                      <h6 class="mb-0 font-weight-bold"><%= msg.user.username %></h6>
+                      <small class="text-muted">@<%= msg.user.username %></small>
+                    </div>
+                  </div>
+                  <% if (msg.user._id.toString() === user._id.toString()) { %>
+                    <form action="/message/delete/<%= msg._id %>" method="POST" onsubmit="return confirm('Delete this post?')" class="ml-2">
+                      <button type="submit" class="btn btn-sm btn-link text-danger p-0"><i class="fa-solid fa-trash"></i></button>
+                    </form>
+                  <% } else { %>
+                    <i class="fa-solid fa-ellipsis text-muted"></i>
+                  <% } %>
+                </div>
+    
+                <!-- Message Content -->
+                <div class="mt-3">
+                  <p class="text-break mb-2"><%= msg.content %></p>
+                </div>
+    
+                <!-- Actions -->
+                <div class="d-flex justify-content-between mt-3 align-items-center">
+                  <div class="d-flex align-items-center">
+                    <!-- Like -->
+                    <form action="/message/like/<%= msg._id %>" method="POST" class="mr-3">
+                      <button type="submit" class="btn btn-link p-0 text-dark"><i class="fa-regular fa-heart"></i></button>
+                      <span class="ml-1"><%= msg.likes?.length || 0 %></span>
+                    </form>
+    
+                    <!-- Comment Toggle -->
+                    <button type="button" class="btn btn-link p-0 mr-3 text-dark toggle-comment" data-id="<%= msg._id %>">
+                      <i class="fa-regular fa-comment"></i>
+                      <span class="ml-1"><%= msg.comments?.length || 0 %></span>
+                    </button>
+    
+                    <i class="fas fa-share-alt"></i>
+                  </div>
+                  <i class="fas fa-bookmark"></i>
+                </div>
+    
+                <!-- Comment Form -->
+                <form action="/message/comment/<%= msg._id %>" method="POST" class="mt-3 comment-form d-none" id="comment-form-<%= msg._id %>">
+                  <div class="input-group">
+                    <input type="text" name="comment" class="form-control form-control-sm" placeholder="Write a comment..." required />
+                    <div class="input-group-append">
+                      <button class="btn btn-sm btn-outline-secondary" type="submit">Comment</button>
+                    </div>
+                  </div>
+                </form>
+    
+                <!-- Comments -->
+                <% if (msg.comments && msg.comments.length > 0) { %>
+                  <div class="mt-3">
+                    <h6 class="font-weight-bold">Comments:</h6>
+                    <% msg.comments.forEach(comment => { %>
+                      <div class="d-flex align-items-start mb-2">
+                        <img src="<%= comment.user.profilePic || '/images/default-avatar.png' %>" class="rounded-circle mr-2" width="30" height="30" />
+                        <div class="flex-grow-1">
+                          <small class="d-block"><strong><%= comment.user.username %>:</strong> <%= comment.content %></small>
+                          <small class="text-muted"><%= new Date(comment.createdAt).toLocaleString() %></small>
+                        </div>
+                        <% if (comment.user._id.toString() === user._id.toString()) { %>
+                          <form action="/message/comment/delete/<%= msg._id %>/<%= comment._id %>" method="POST" onsubmit="return confirm('Delete this comment?')" class="ml-2">
+                            <button type="submit" class="btn btn-sm btn-link text-danger p-0"><i class="fa-solid fa-trash"></i></button>
+                          </form>
+                        <% } %>
+                      </div>
+                    <% }); %>
+                  </div>
+                <% } %>
+              </div>
+            </div>
+          <% }); %>
+        </div>
+      </div>
+
+      <!-- Right Sidebar (Desktop only) -->
+      <div class="col-md-3 d-none d-md-block">
+        <div class="card shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title">Suggestions</h5>
+            <ul class="list-group list-group-flush">
+              <% alluser.forEach((a) => { %>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <h6><%= a.username %></h6>
+                    </div>
+                  </div>
+                  <button class="btn btn-sm btn-primary">Follow</button>
+                </li>
+              <% }) %>
+            </ul>
+          </div>
+        </div>
+      </div>
+      
+
+    </div>
+  </main>
+
+  <script>
+    // Sidebar toggle
+    document.getElementById('menuToggle').addEventListener('click', function() {
+      document.getElementById('mobileSidebar').style.left = '0';
+    });
+  
+    document.getElementById('closeSidebar').addEventListener('click', function() {
+      document.getElementById('mobileSidebar').style.left = '-250px';
+    });
+  
+    // Dark mode toggle with localStorage
+    const darkModeToggle = document.getElementById('toggleDarkMode');
+    const body = document.body;
+  
+    // Load saved mode
+    if (localStorage.getItem('dark-mode') === 'enabled') {
+      body.classList.add('dark-mode');
+    }
+  
+    darkModeToggle.addEventListener('click', function () {
+      body.classList.toggle('dark-mode');
+  
+      if (body.classList.contains('dark-mode')) {
+        localStorage.setItem('dark-mode', 'enabled');
+      } else {
+        localStorage.setItem('dark-mode', 'disabled');
+      }
+    });
+  
+    // Toggle comments
+    document.querySelectorAll('.toggle-comment').forEach(button => {
+      button.addEventListener('click', () => {
+        const commentId = button.getAttribute('data-id');
+        const commentForm = document.getElementById(`comment-form-${commentId}`);
+        commentForm.classList.toggle('d-none');
+      });
+    });
+  
+    // Post type toggles
+    // document.getElementById("image-btn").addEventListener("click", () => {
+    //   document.getElementById("image-upload-container").style.display = "block";
+    //   document.getElementById("video-upload-container").style.display = "none";
+    //   document.getElementById("reel-upload-container").style.display = "none";
+    // });
+  
+    // document.getElementById("video-btn").addEventListener("click", () => {
+    //   document.getElementById("image-upload-container").style.display = "none";
+    //   document.getElementById("video-upload-container").style.display = "block";
+    //   document.getElementById("reel-upload-container").style.display = "none";
+    // });
+  
+    // document.getElementById("reel-btn").addEventListener("click", () => {
+    //   document.getElementById("image-upload-container").style.display = "none";
+    //   document.getElementById("video-upload-container").style.display = "none";
+    //   document.getElementById("reel-upload-container").style.display = "block";
+    // });
+  </script>
+  
+
+  <!-- Bootstrap JS -->
+  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

@@ -1,0 +1,105 @@
+body{
+    margin: 0;
+    padding: 0;
+    /* width: fit-content; */
+    height: fit-content;
+    background-color: aliceblue;
+    /* display: flex; */
+    /* justify-content: center; */
+}
+
+
+.right .messages{
+    background-color: rgb(204, 197, 197);
+    width: 100%;
+    height: fit-content;
+    /* display: flex; */
+    /* background: red; */
+    /* border-radius: var(--card-border-radius); */
+    /* padding: var(--card-padding); */
+}
+
+.right .messages .heading{
+    font-size: 2rem;
+    display: flex;
+    justify-content: center;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    position: relative;
+    padding-bottom: 1rem;
+}
+.right .messages{
+    /* background: rgb(148, 45, 45); */
+    border-radius: var(--card-border-radius);
+    /* padding-left:6rem; */
+
+}
+.right .search-bar{
+    width: 70%;
+    height: 3rem;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    /* background-color: aliceblue; */
+    /* width: 50%; */
+    /* border: 2px solid ; */
+    border-radius: 5rem;
+}
+.right .messages .search-bar{
+    display: flex;
+
+}
+.catagory{
+    display: flex;
+    justify-content: space-evenly;
+    font-size: 1.7rem;
+    width: 100%;
+
+
+}
+/* .right .catagory .message{
+    margin-left: 23px;
+} */
+
+.profile-photo{
+    width: 3rem;
+    /* height: 2rem; */
+    border-radius: 50%;
+    aspect-ratio: 1/1;
+    overflow: hidden;
+}
+img {
+    display: block;
+    width: 100%;
+    
+}
+
+.right .messages .catagory{
+    
+
+    /* display: flex;
+    justify-content: space-around;
+    margin-left: 1rem; */
+}
+
+
+
+.message{
+/* scroll-margin-left: 2rem; */
+margin-left: 3rem;
+/* border: 2px solid red; */
+padding-left: 3rem;
+width: 80%;
+height: 20%;
+/* background-color: aliceblue; */
+border-radius: 23rem;
+display: flex;
+font-size: 1.7rem;
+
+}
+#message-search{
+    width: 90%;
+    border-radius: 2rem;
+    display: flex;
+    justify-content: center;
+
+}
