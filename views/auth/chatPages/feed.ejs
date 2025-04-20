@@ -14,7 +14,7 @@
 
  <link rel="stylesheet" href="/style.css">
 </head>
-<body class="bg-gray-100">
+<body class="bg-gray-100 " id="feed">
 
   <!-- Navbar -->
   <nav class="bg-white py-2 shadow-sm">
@@ -322,6 +322,31 @@
     //   document.getElementById("video-upload-container").style.display = "none";
     //   document.getElementById("reel-upload-container").style.display = "block";
     // });
+
+  
+
+
+  // Initialize Socket.IO client
+  const socket = io();
+
+  // Listen for the 'newPost' event from the server
+  socket.on('newPost', (newPost) => {
+    console.log('📥 New Post Received:', newPost);
+
+    // Dynamically add the new post to the feed without refreshing
+    const feed = document.getElementById('feed');
+    const newPostHTML = `
+      <div class="post" id="post-${newPost._id}">
+        <h4>${newPost.user.username}</h4>
+        <p>${newPost.content}</p>
+        <!-- You can add an image or video if available -->
+        ${newPost.image ? `<img src="/uploads/posts/${newPost.image}" alt="Post Image" />` : ''}
+      </div>
+    `;
+    feed.insertAdjacentHTML('afterbegin', newPostHTML);
+  });
+</script>
+
   </script>
   
 

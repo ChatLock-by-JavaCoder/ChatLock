@@ -9,8 +9,7 @@ export const isAuthenticated = (req, res, next) => {
     }
   };
   
-  // Optional: add user data to req.user
-//   import User from "../models/UserModel.js"; // Adjust path if needed
+
   
   export const attachUser = async (req, res, next) => {
     if (req.session && req.session.userId) {

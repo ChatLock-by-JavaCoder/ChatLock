@@ -14,17 +14,8 @@ import { dirname, join } from 'path';
 import { Server as SocketIo } from "socket.io";
 import { userRoute } from "./routers/userRouter.js";
 import fs from 'fs';
-import { userPostRoute } from "./routers/userPostRoute.js";
 import { messageRoute } from "./routers/MessageModelRoute.js";
-import { UserRoute } from "./routers/suggessionRouter.js";
-import { UsermessageRoute } from "./routers/UserMessageModelRoute.js";
-// import { attachUser } from "./middlewares/authMiddleware.js";
-// import { isAuthenticated, attachUser } from "./middlewares/authMiddleware.js";
 
-
-
-
-// --- Load environment variables ---
 dotenv.config();
 
 // --- MongoDB Connection ---
@@ -39,6 +30,12 @@ mongoose.connect(process.env.MONGO_URI, {
 const app = express();
 const server = http.createServer(app);
 const io = new SocketIo(server);
+
+app.use((req, res, next) => {
+  req.io = io; // Provide Socket.IO instance to each request
+  next();
+});
+
 
 // --- Middleware ---
 // app.use(helmet.contentSecurityPolicy({
@@ -128,9 +125,6 @@ io.on('connection', (socket) => {
 // --- Routes ---
 app.use("/", userRoute);
 app.use("/message"  ,messageRoute)
-app.use("/post" ,userPostRoute)
-app.use("/sussgestion" ,UserRoute)
-app.use("/" ,UsermessageRoute)
 
 // --- Start Server ---
 server.listen(8080, () => {

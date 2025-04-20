@@ -8,9 +8,8 @@
   <link rel="stylesheet" href="/filter.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
- 
- 
-</style>
+    /* Add any additional styling here if needed */
+  </style>
 </head>
 <body class="bg-gray-50 min-h-screen">
   <!-- Header -->
@@ -39,21 +38,12 @@
             <i class="fa-solid fa-image text-blue-600 text-lg"></i>
             <input type="file" name="photo" accept="image/*" class="hidden" onchange="previewFile(event, 'photo')">
           </label>
-          <label class="upload-icon w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer" title="Upload Video">
-            <i class="fa-solid fa-video text-blue-600 text-lg"></i>
-            <input type="file" name="video" accept="video/*" class="hidden" onchange="previewFile(event, 'video')">
-          </label>
-          <label class="upload-icon w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer" title="Upload Reel">
-            <i class="fa-solid fa-film text-blue-600 text-lg"></i>
-            <input type="file" name="reel" accept="video/*" class="hidden" onchange="previewFile(event, 'reel')">
-          </label>
         </div>
       </div>
 
       <!-- Filter Previews -->
       <div id="filterPreviewSection" class="hidden mt-4 overflow-x-auto whitespace-nowrap px-2">
         <div id="filterPreviews" class="flex gap-4 pb-2"></div>
-        
       </div>
 
       <!-- Form -->
@@ -67,7 +57,6 @@
         <div class="mb-4 hidden" id="locationSection">
           <input type="text" name="location" id="location" class="location-input w-full p-3 border border-gray-200 rounded-lg focus:outline-none transition-all duration-200" placeholder="Add location..." />
         </div>
-
       </form>
     </div>
   </div>
@@ -85,6 +74,6 @@
     </button>
   </div>
 
- <script src="/filter.js"></script>
+  <script src="/filter.js"></script>
 </body>
 </html>

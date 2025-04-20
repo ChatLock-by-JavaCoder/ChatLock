@@ -7,32 +7,6 @@ import {  isAuthenticated } from "../middlewares/authMiddleware.js";
 
 
 export const messageRoute = express.Router(); 
-// // messageRoute.post("/post", async (req, res) => {
-//     try {
-//       const userId = req.session; // <- use session-stored ID
-//       const content = req.body.message;
-
-//       res.send(userId)
-  
-//     //   if (!userId) {
-//     //     return res.status(401).json({ message: "Unauthorized: Please log in." });
-//     //   }
-  
-//     //   if (!content || content.trim() === "") {
-//     //     return res.status(400).json({ message: "Message cannot be empty." });
-//     //   }
-  
-//     //   const newMessage = await Message.create({
-//     //     user: userId,
-//     //     content: content.trim(),
-//     //   });
-  
-//     //   res.status(201).json({ message: "Post created", post: newMessage });
-//     } catch (error) {
-//       console.error(error);
-//       res.status(500).json({ message: "Something went wrong" });
-//     }
-// //   });
 
 messageRoute.post("/post", isAuthenticated, async (req, res) => {
     try {
