@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Create Post · InstaClone</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="/filter.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <style>
+ 
+ 
+</style>
+</head>
+<body class="bg-gray-50 min-h-screen">
+  <!-- Header -->
+  <header class="fixed top-0 left-0 right-0 bg-white shadow-sm flex items-center justify-between p-4 z-10">
+    <button onclick="window.history.back()" class="text-gray-600" aria-label="Go back">
+      <i class="fa-solid fa-arrow-left text-lg"></i>
+    </button>
+    <h1 class="text-lg font-semibold text-gray-900">New Post</h1>
+    <button id="postButton" class="text-blue-600 font-semibold disabled:text-gray-400" disabled>Share</button>
+  </header>
+
+  <!-- Main Content -->
+  <div class="container max-w-md mx-auto pt-16 pb-20 px-4">
+    <div class="bg-white rounded-lg shadow-sm">
+      <!-- Preview -->
+      <div class="mb-4">
+        <div id="preview" class="preview-box w-full rounded-lg border border-gray-200 bg-gray-100 flex items-center justify-center overflow-hidden hidden">
+          <p class="text-gray-500">Select media to preview</p>
+        </div>
+      </div>
+
+      <!-- Upload Toolbar -->
+      <div id="uploadToolbar" class="flex justify-between items-center mb-4 px-4 flex-wrap">
+        <div class="flex gap-3">
+          <label class="upload-icon w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer" title="Upload Photo">
+            <i class="fa-solid fa-image text-blue-600 text-lg"></i>
+            <input type="file" name="photo" accept="image/*" class="hidden" onchange="previewFile(event, 'photo')">
+          </label>
+          <label class="upload-icon w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer" title="Upload Video">
+            <i class="fa-solid fa-video text-blue-600 text-lg"></i>
+            <input type="file" name="video" accept="video/*" class="hidden" onchange="previewFile(event, 'video')">
+          </label>
+          <label class="upload-icon w-10 h-10 bg-gray-100 rounded-full flex items-center justify-center cursor-pointer" title="Upload Reel">
+            <i class="fa-solid fa-film text-blue-600 text-lg"></i>
+            <input type="file" name="reel" accept="video/*" class="hidden" onchange="previewFile(event, 'reel')">
+          </label>
+        </div>
+      </div>
+
+      <!-- Filter Previews -->
+      <div id="filterPreviewSection" class="hidden mt-4 overflow-x-auto whitespace-nowrap px-2">
+        <div id="filterPreviews" class="flex gap-4 pb-2"></div>
+        
+      </div>
+
+      <!-- Form -->
+      <form action="/feed/message/post" method="POST" enctype="multipart/form-data" id="postForm" onsubmit="handleSubmit(event)">
+        <textarea name="caption" id="caption" class="caption-input w-full p-3 border border-gray-200 rounded-lg focus:outline-none transition-all duration-200 resize-none hidden" rows="3" placeholder="Write a caption..."></textarea>
+
+        <div class="mb-4 hidden" id="tagSection">
+          <input type="text" name="tags" id="tags" class="tag-input w-full p-3 border border-gray-200 rounded-lg focus:outline-none transition-all duration-200" placeholder="Tag people..." />
+        </div>
+
+        <div class="mb-4 hidden" id="locationSection">
+          <input type="text" name="location" id="location" class="location-input w-full p-3 border border-gray-200 rounded-lg focus:outline-none transition-all duration-200" placeholder="Add location..." />
+        </div>
+
+      </form>
+    </div>
+  </div>
+
+  <!-- Bottom Toolbar -->
+  <div class="fixed bottom-0 left-0 right-0 bg-white shadow-t-md p-4 flex justify-around items-center">
+    <button onclick="toggleSection('tagSection')" class="text-gray-600 hover:text-blue-600" aria-label="Tag people">
+      <i class="fa-solid fa-user-tag"></i> Tag
+    </button>
+    <button onclick="toggleSection('locationSection')" class="text-gray-600 hover:text-blue-600" aria-label="Add location">
+      <i class="fa-solid fa-location-dot"></i> Location
+    </button>
+    <button class="insta-gradient post-btn text-white px-4 py-2 rounded-full font-medium" onclick="document.getElementById('postForm').submit()" aria-label="Share post">
+      Share
+    </button>
+  </div>
+
+ <script src="/filter.js"></script>
+</body>
+</html>

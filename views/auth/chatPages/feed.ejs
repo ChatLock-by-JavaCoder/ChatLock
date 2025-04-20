@@ -35,7 +35,8 @@
         <button class="btn btn-dark mr-2" id="toggleDarkMode">
           <i class="fas fa-moon"></i>
         </button>
-        <button class="btn btn-primary mr-2 d-none d-md-inline">Create</button>
+        <a href="/feed/post/create" class="btn btn-primary mr-2 d-none d-md-inline">Create</a>
+        <!-- <button >Create</button> -->
         <img src="<%= user.profilePic %>" alt="Profile" class="rounded-circle" width="40" height="40" />
       </div>
     </div>
@@ -131,6 +132,8 @@
                <div class="form-group">
                 <textarea class="form-control" name="message" rows="3" placeholder="What are you thinking, <%= user.username %>?" required></textarea>
               </div>
+
+              
           
               <!-- Upload Fields -->
               <!-- <div id="image-upload-container" class="form-group" style="display: none;">

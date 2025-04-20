@@ -17,6 +17,7 @@ import fs from 'fs';
 import { userPostRoute } from "./routers/userPostRoute.js";
 import { messageRoute } from "./routers/MessageModelRoute.js";
 import { UserRoute } from "./routers/suggessionRouter.js";
+import { UsermessageRoute } from "./routers/UserMessageModelRoute.js";
 // import { attachUser } from "./middlewares/authMiddleware.js";
 // import { isAuthenticated, attachUser } from "./middlewares/authMiddleware.js";
 
@@ -129,6 +130,7 @@ app.use("/", userRoute);
 app.use("/message"  ,messageRoute)
 app.use("/post" ,userPostRoute)
 app.use("/sussgestion" ,UserRoute)
+app.use("/" ,UsermessageRoute)
 
 // --- Start Server ---
 server.listen(8080, () => {
