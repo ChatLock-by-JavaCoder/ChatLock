@@ -59,35 +59,8 @@
       box-shadow: 0 0 0 0.2rem rgba(59, 130, 246, 0.25);
     }
 
-    .file-input {
-      display: none; /* Hide the default file input */
-    }
+ 
 
-    .avatar-container {
-      display: flex;
-      justify-content: center;
-      margin-bottom: 1rem;
-    }
-
-    .avatar {
-      width: 120px;
-      height: 120px;
-      border-radius: 50%;
-      background-color: #4a5568;
-      background-size: cover;
-      background-position: center;
-      cursor: pointer;
-      border: 4px solid #3b82f6;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: #fff;
-      font-size: 1.5rem;
-    }
-
-    .avatar:hover {
-      background-color: #2563eb;
-    }
 
     .form-footer {
       text-align: center;
@@ -128,15 +101,11 @@
         </div>
       <% } %>
 
-      <form action="/register" method="POST" enctype="multipart/form-data">
+      <form action="/register" method="post" >
         
         <!-- Profile Picture Avatar -->
-        <div class="form-group avatar-container">
-          <label for="profilePic" class="avatar" id="avatarLabel">
-            <span>+</span>
-            <input type="file" id="profilePic" name="profilePic" accept="image/*" class="file-input" onchange="previewProfilePic(event)" />
-          </label>
-        </div>
+        
+         
 
         <div class="form-group">
           <label for="username" class="form-label">Username</label>

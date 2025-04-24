@@ -14,7 +14,16 @@
 
  <link rel="stylesheet" href="/style.css">
 </head>
+
+<style>
+  /* Add this CSS for smooth transition */
+#mobileSidebar {
+  transition: left 0.3s ease;
+}
+
+</style>
 <body class="bg-gray-100 " id="feed">
+  
 
   <!-- Navbar -->
   <nav class="bg-white py-2 shadow-sm">
@@ -36,12 +45,14 @@
           <i class="fas fa-moon"></i>
         </button>
         <a href="/feed/post/create" class="btn btn-primary mr-2 d-none d-md-inline">Create</a>
-        <!-- <button >Create</button> -->
-        <img src="<%= user.profilePic %>" alt="Profile" class="rounded-circle" width="40" height="40" />
+        <a href="">
+          <img src="<%= user.profilePic %>" alt="Profile" class="rounded-circle" width="40" height="40" />
+
+        </a>
       </div>
     </div>
   </nav>
-
+  
   <!-- Mobile Sidebar -->
   <div id="mobileSidebar" class="position-fixed bg-white h-100 shadow-sm">
     <div class="p-3 border-bottom d-flex justify-content-between align-items-center">
@@ -50,7 +61,10 @@
     </div>
     <div class="p-3">
       <div class="mb-3 d-flex align-items-center">
+        <a href="/user/edit/profile">
+
         <img src="<%= user.profilePic %>" class="rounded-circle mr-2" width="40" height="40" />
+        </a>
         <div>
           <h6 class="mb-0"><%= user.username %></h6>
           <small class="text-muted">@<%= user.username %></small>
@@ -76,7 +90,9 @@
       <div class="col-md-3 d-none d-md-block mb-3">
         <div class="mb-4 d-flex align-items-center">
             <div class="profile-img-circle mr-2">
+              <a href="/user/edit/profile">
               <img src="<%= user.profilePic %>" alt="User Image">
+            </a>
             </div>
             <div>
               <h5 class="mb-0"><%= user.username %></h5>
@@ -116,41 +132,14 @@
             </div>
 
 
-            <!-- <div class="d-flex mb-3">
-              <button type="button" class="btn btn-outline-primary btn-sm w-100" id="image-btn">
-                <i class="fa fa-image"></i> Image
-              </button>
-              <button type="button" class="btn btn-outline-primary btn-sm w-100 mx-2" id="video-btn">
-                <i class="fa fa-video"></i> Video
-              </button>
-              <button type="button" class="btn btn-outline-primary btn-sm w-100" id="reel-btn">
-                <i class="fa fa-film"></i> Reel
-              </button>
-            </div> -->
+  
 
                <!-- Post Message -->
                <div class="form-group">
                 <textarea class="form-control" name="message" rows="3" placeholder="What are you thinking, <%= user.username %>?" required></textarea>
               </div>
 
-              
-          
-              <!-- Upload Fields -->
-              <!-- <div id="image-upload-container" class="form-group" style="display: none;">
-                <label for="image-upload">Upload an Image:</label>
-                <input type="file" class="form-control-file" id="image-upload" name="image" accept="image/*">
-              </div>
-
-              <div id="video-upload-container" class="form-group" style="display: none;">
-                <label for="video-upload">Upload a Video:</label>
-                <input type="file" class="form-control-file" id="video-upload" name="video" accept="video/*">
-              </div>
-          
-              <div id="reel-upload-container" class="form-group" style="display: none;">
-                <label for="reel-upload">Upload a Reel:</label>
-                <input type="file" class="form-control-file" id="reel-upload" name="reel" accept="video/*">
-              </div> -->
-
+            
                  <div class="d-flex justify-content-end">
               <button type="submit" class="btn btn-primary btn-sm">Post</button>
             </div>
@@ -250,7 +239,8 @@
               <% alluser.forEach((a) => { %>
                 <li class="list-group-item d-flex justify-content-between align-items-center">
                   <div class="d-flex align-items-center">
-                    <div>
+                    <div class="flex">
+                      <img src="<%= a.profilePic %>" alt="" class="rounded-circle mr-2" width="40" height="40"> 
                       <h6><%= a.username %></h6>
                     </div>
                   </div>
@@ -352,6 +342,72 @@
 
   <!-- Bootstrap JS -->
   <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script src="/socket.io/socket.io.js"></script>
+
+  
+  
+
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/js/bootstrap.bundle.min.js"></script>
 </body>
+
+<script>
+  // Initialize Socket.IO client
+  const socket = io();
+
+  // Listen for the 'newPost' event from the server
+  socket.on('newPost', (newPost) => {
+    console.log('📥 New Post Received:', newPost);
+    
+    // Dynamically add the new post to the feed without refreshing
+    const feed = document.getElementById('feed');
+    const newPostHTML = `
+      <div class="post" id="post-${newPost._id}">
+        <h4>${newPost.user.username}</h4>
+        <p>${newPost.content}</p>
+        ${newPost.image ? `<img src="/uploads/posts/${newPost.image}" alt="Post Image" />` : ''}
+      </div>
+    `;
+    feed.insertAdjacentHTML('afterbegin', newPostHTML);
+  });
+
+  // Listen for the 'newUser' event
+  socket.on('newUser', (user) => {
+    console.log('📥 New User Registered:', user);
+    
+    // Handle updating the feed with new user data, if necessary
+    // For example, updating the suggestions or the user list
+    const suggestionsList = document.getElementById('suggestions-list');
+    const newUserHTML = `
+      <li class="list-group-item">
+        <div class="d-flex align-items-center">
+          <img src="${user.profilePic}" alt="User Profile" class="rounded-circle mr-2" width="40" height="40">
+          <span>${user.username}</span>
+        </div>
+      </li>
+    `;
+    suggestionsList.insertAdjacentHTML('afterbegin', newUserHTML);
+  });
+
+  // Listen for the 'postDeleted' event
+  socket.on('postDeleted', (postId) => {
+    console.log('📥 Post Deleted:', postId);
+
+    // Remove the post from the feed without refreshing the page
+    const postElement = document.getElementById(`post-${postId}`);
+    if (postElement) {
+      postElement.remove();
+    }
+  });
+
+  // Listen for the 'commentDeleted' event
+  socket.on('commentDeleted', (postId, commentId) => {
+    console.log('📥 Comment Deleted:', commentId);
+    
+    // Remove the comment from the post's comment section
+    const commentElement = document.getElementById(`comment-${commentId}`);
+    if (commentElement) {
+      commentElement.remove();
+    }
+  });
+</script>
 </html>
