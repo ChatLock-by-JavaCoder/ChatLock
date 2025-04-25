@@ -13,6 +13,7 @@ import { Server as SocketIo } from "socket.io";
 // Routes
 import { userRoute } from "./routers/userRouter.js";
 import { messageRoute } from "./routers/MessageModelRoute.js";
+import { chatRoute } from "./routers/ChatRouter.js";
 
 dotenv.config();
 
@@ -73,6 +74,7 @@ io.on('connection', (socket) => {
 // --- Routes ---
 app.use("/", userRoute);
 app.use("/message", messageRoute);
+app.use("/users" , chatRoute)
 
 // --- Start Server ---
 server.listen(8080, () => {

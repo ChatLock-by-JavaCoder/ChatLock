@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Messenger</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://kit.fontawesome.com/a2e8b6d64f.js" crossorigin="anonymous"></script>
+  <style>
+    @media (max-width: 768px) {
+      .sidebar { display: none; }
+      .mobile-header { display: flex; }
+      .bottom-nav { display: flex; }
+    }
+    @media (min-width: 769px) {
+      .mobile-header, .bottom-nav { display: none; }
+    }
+    .bottom-nav a {
+      flex: 1;
+      text-align: center;
+      padding: 10px 0;
+      color: #4b5563;
+    }
+    .bottom-nav a.active {
+      color: #111827;
+      font-weight: 600;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 text-gray-800">
+
+  <!-- Mobile Header -->
+  <div class="mobile-header bg-white shadow-md p-4 justify-between items-center sticky top-0 z-50">
+    <h1 class="text-xl font-bold">Messenger</h1>
+    <a href="/feed" class="text-gray-600"><i class="fa-solid fa-house text-xl"></i></a>
+  </div>
+
+  <div class="flex min-h-screen">
+    
+    <!-- Sidebar -->
+    <div class="sidebar w-64 bg-white shadow-md px-6 py-8 space-y-4">
+      <h1 class="text-2xl font-bold mb-6">Menu</h1>
+      <nav class="space-y-2 text-gray-700">
+        <a href="/feed" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 transition">
+          <i class="fa-solid fa-house mr-3"></i> Home
+        </a>
+        <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 transition">
+          <i class="fab fa-wpexplorer mr-3"></i> Explore
+        </a>
+        <a href="#" class="flex items-center justify-between px-3 py-2 rounded-lg hover:bg-gray-100 transition">
+          <span class="flex items-center"><i class="fas fa-bell mr-3"></i> Notifications</span>
+          <span class="bg-red-500 text-white text-xs px-2 py-0.5 rounded-full">9+</span>
+        </a>
+        <a href="/users/chat" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 transition bg-gray-200 font-semibold">
+          <i class="fas fa-comment-dots mr-3"></i> Messages
+        </a>
+        <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 transition">
+          <i class="far fa-bookmark mr-3"></i> Bookmarks
+        </a>
+        <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 transition">
+          <i class="fa-regular fa-chart-bar mr-3"></i> Analytics
+        </a>
+        <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 transition">
+          <i class="fab fa-themeco mr-3"></i> Theme
+        </a>
+        <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-gray-100 transition">
+          <i class="fa-solid fa-gear mr-3"></i> Settings
+        </a>
+      </nav>
+    </div>
+
+    <!-- Main Content -->
+    <div class="flex-1 content p-6 pb-20 sm:pb-10">
+      <div class="max-w-2xl mx-auto bg-white shadow-lg rounded-xl overflow-hidden">
+        <div class="p-4 border-b">
+          <h1 class="text-2xl font-bold mb-2">Messages</h1>
+          
+          <!-- Search Box -->
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search users..."
+            class="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-blue-400 text-sm"
+          />
+        </div>
+
+        <!-- User List -->
+        <ul id="userList" class="divide-y">
+          <% users.forEach(user => { %>
+            <li class="user-item flex items-center p-4 hover:bg-gray-50 transition cursor-pointer">
+              <img src="<%= user.profilePic %>" alt="profile" class="w-12 h-12 rounded-full object-cover border border-gray-300">
+              <div class="ml-4">
+                <h2 class="text-lg font-semibold username"><%= user.username %></h2>
+                <p class="text-sm text-gray-500">Tap to chat</p>
+              </div>
+            </li>
+          <% }) %>
+        </ul>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom Nav for Mobile -->
+  <div class="bottom-nav fixed bottom-0 left-0 right-0 bg-white shadow-inner border-t border-gray-200 z-50">
+    <a href="/feed" class="active">
+      <i class="fa-solid fa-house text-xl"></i>
+    </a>
+    <a href="#">
+      <i class="fab fa-wpexplorer text-xl"></i>
+    </a>
+    <a href="/users/chat">
+      <i class="fas fa-comment-dots text-xl"></i>
+    </a>
+    <a href="#">
+      <i class="far fa-bookmark text-xl"></i>
+    </a>
+    <a href="#">
+      <i class="fa-solid fa-user text-xl"></i>
+    </a>
+  </div>
+
+  <!-- JS for Live Search -->
+  <script>
+    const searchInput = document.getElementById('searchInput');
+    const userItems = document.querySelectorAll('.user-item');
+
+    searchInput.addEventListener('input', function () {
+      const query = this.value.toLowerCase();
+
+      userItems.forEach(item => {
+        const username = item.querySelector('.username').textContent.toLowerCase();
+        item.style.display = username.includes(query) ? 'flex' : 'none';
+      });
+    });
+  </script>
+
+</body>
+</html>
